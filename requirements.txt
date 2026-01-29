@@ -1,0 +1,6 @@
+# Core dependencies (minimal - uses standard library where possible)
+
+# Optional dependencies for enhanced functionality:
+# pyyaml>=6.0        # For YAML config files
+# rich>=13.0         # For enhanced CLI output
+# tree-sitter>=0.20  # For advanced AST parsing
