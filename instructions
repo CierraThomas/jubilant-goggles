@@ -1,0 +1,152 @@
+Python Vulnerabilities
+tests/vulnerable/python/sqli.py
+import sqlite3
+
+def get_user(username):
+    conn = sqlite3.connect("users.db")
+    query = f"SELECT * FROM users WHERE username = '{username}'"
+    return conn.execute(query).fetchall()
+
+
+Expected findings
+
+SQL Injection
+
+Source: function argument
+
+Sink: execute()
+
+tests/vulnerable/python/xss.py
+from flask import Flask, request
+
+app = Flask(__name__)
+
+@app.route("/hello")
+def hello():
+    name = request.args.get("name")
+    return f"<h1>Hello {name}</h1>"
+
+
+Expected findings
+
+Reflected XSS
+
+Source: request.args
+
+Sink: HTML response
+
+tests/vulnerable/python/hardcoded_secret.py
+API_KEY = "sk_live_1234567890abcdef"
+
+def call_api():
+    return API_KEY
+
+
+Expected findings
+
+Hard-coded secret
+
+High confidence
+
+tests/vulnerable/python/complexity.py
+def complex_function(x):
+    if x > 0:
+        if x > 10:
+            if x > 20:
+                if x > 30:
+                    if x > 40:
+                        return "too complex"
+    return "ok"
+
+
+Expected findings
+
+Cyclomatic complexity
+
+Excessive nesting
+
+JavaScript / TypeScript
+tests/vulnerable/javascript/sqli.js
+const mysql = require("mysql");
+
+function getUser(username) {
+  const query = "SELECT * FROM users WHERE name = '" + username + "'";
+  connection.query(query);
+}
+
+
+Expected findings
+
+SQL Injection
+
+String concatenation into query
+
+tests/vulnerable/javascript/xss.js
+app.get("/hello", (req, res) => {
+  res.send("<h1>Hello " + req.query.name + "</h1>");
+});
+
+
+Expected findings
+
+Reflected XSS
+
+tests/vulnerable/javascript/hardcoded_secret.js
+const TOKEN = "ghp_abcdefghijklmnopqrstuvwxyz123456";
+
+Java
+tests/vulnerable/java/SQLInjection.java
+import java.sql.*;
+
+public class SQLInjection {
+    public void getUser(String username) throws Exception {
+        Connection conn = DriverManager.getConnection("jdbc:sqlite:users.db");
+        Statement stmt = conn.createStatement();
+        stmt.execute("SELECT * FROM users WHERE name = '" + username + "'");
+    }
+}
+
+tests/vulnerable/java/XSSServlet.java
+import javax.servlet.http.*;
+
+public class XSSServlet extends HttpServlet {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws java.io.IOException {
+        String name = req.getParameter("name");
+        resp.getWriter().write("<h1>Hello " + name + "</h1>");
+    }
+}
+
+tests/vulnerable/java/HardcodedSecret.java
+public class HardcodedSecret {
+    private static final String API_KEY = "AIzaSyDUMMYKEY123456";
+}
+
+C#
+tests/vulnerable/csharp/SqlInjection.cs
+using System.Data.SqlClient;
+
+public class UserRepo {
+    public void GetUser(string name) {
+        var query = "SELECT * FROM users WHERE name = '" + name + "'";
+        var cmd = new SqlCommand(query);
+        cmd.ExecuteReader();
+    }
+}
+
+Go
+tests/vulnerable/go/sqli.go
+package main
+
+import "database/sql"
+
+func getUser(db *sql.DB, name string) {
+    query := "SELECT * FROM users WHERE name = '" + name + "'"
+    db.Query(query)
+}
+
+Ruby
+tests/vulnerable/ruby/sqli.rb
+def get_user(name)
+  query = "SELECT * FROM users WHERE name = '#{name}'"
+  DB.execute(query)
+end
