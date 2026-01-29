@@ -1,0 +1,22 @@
+ [build-system]
+ requires = ["setuptools>=68", "wheel"]
+ build-backend = "setuptools.build_meta"
+ 
+ [project]
+ name = "mlsecscan"
+ version = "0.1.0"
+ description = "Multi-language security and quality scanner"
+ readme = "README.md"
+ requires-python = ">=3.10"
+ dependencies = [
+   "PyYAML",
+   "tree_sitter",
+   "tree_sitter_languages",
+ ]
+ 
+ [project.scripts]
+ mlsecscan = "mlsecscan.cli:main"
+ 
+ [tool.setuptools.packages.find]
+ where = ["."]
+ include = ["mlsecscan*"]

@@ -1,0 +1,41 @@
+ version: 1
+ rules:
+   enabled:
+     - SQLI
+     - XSS
+     - HARDCODED_SECRET
+     - COMPLEXITY
+   severities:
+     SQLI: High
+     XSS: High
+     HARDCODED_SECRET: High
+     COMPLEXITY: Medium
+   confidence:
+     SQLI: Medium
+     XSS: Medium
+     HARDCODED_SECRET: High
+     COMPLEXITY: Low
+ thresholds:
+   complexity:
+     max_cyclomatic: 15
+     max_nesting: 4
+     max_function_lines: 80
+ languages:
+   enabled:
+     - c
+     - cpp
+     - csharp
+     - go
+     - java
+     - kotlin
+     - javascript
+     - typescript
+     - python
+     - ruby
+     - rust
+     - swift
+ suppression:
+   inline_comment: "mlsecscan:ignore"
+ reporting:
+   format: text
+   fail_on_severity: High
